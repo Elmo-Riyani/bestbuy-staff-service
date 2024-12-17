@@ -33,14 +33,14 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
         run: |
-          docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest .
+          docker build -t $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:test .
 
       - name: Push Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
         run: |
-          docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
+          docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:test
 
   # Step 2: Test Job (Integration Tests)
   # Run automated tests against the containerized application to ensure it behaves as expected.
@@ -81,8 +81,8 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
         run: |
-          docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
-          docker tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
+          docker pull $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:test
+          docker tag $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:test $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
           docker push $DOCKER_USERNAME/$DOCKER_IMAGE_NAME:latest
 
   # Step 3: Deploy Job
